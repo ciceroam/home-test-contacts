@@ -1,0 +1,35 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+            algorithm: auto
+        App\Entity\User:
+            algorithm: auto
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: lazy
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_contact_index
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: app_logout
+                target: app_login
+
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contact, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
