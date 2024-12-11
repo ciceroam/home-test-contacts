@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <h1>Edit Contact</h1>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('app_contact_index') }}" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Back</span>
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            {{ include('contact/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactRepository::class)
@@ -19,25 +20,30 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Name cannot be empty.")
      */
-    private $name;
+    private string $name;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Name cannot be empty.")
+     * @Assert\Email(
+     *     message="The email '{{ value }}' is not a valid email."
+     *  )
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $phone;
+    private ?string $phone;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -49,12 +55,12 @@ class Contact
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
